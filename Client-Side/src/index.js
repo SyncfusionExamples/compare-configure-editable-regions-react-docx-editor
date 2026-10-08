@@ -176,7 +176,7 @@ const CompareDocumentsFunctional = (props) => {
       <div className="control-section" style={{ width: '100%' }}>
         {/* Navigation to Protection sample */}
         <div style={{ width: '760px', margin: '10px auto', display: 'flex', justifyContent: 'flex-end' }}>
-          <button className="nav-button" onClick={() => { window.history.pushState({}, '', '/document-protection'); navigate('/document-protection'); }} style={{
+          <button className="nav-button" onClick={() => { navigate('/document-protection'); }} style={{
             padding: '8px 16px',
             border: '1px solid #0078d4',
             borderRadius: 4,
