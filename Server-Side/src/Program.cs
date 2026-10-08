@@ -81,10 +81,14 @@ namespace EJ2APIServices
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UsePathBase("/compare-configure-editable-regions-react-docx-editor");
             app.UseRouting();
             app.UseAuthorization();
             app.UseCors("MyPolicy");
             app.UseResponseCompression();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            app.MapFallbackToFile("index.html");
             app.MapControllers().RequireCors("MyPolicy");
 
             app.Run();
