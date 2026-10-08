@@ -20,7 +20,13 @@ const CompareDocumentsFunctional = () => {
     const [showResult, setShowResult] = useState(true);
     const [compareClicked, setCompareClicked] = useState(false);
     const [showRevisions, setShowRevisions] = useState(false);
-    let serviceUrl = 'http://localhost:62870/api/documenteditor/';
+    const isDev = import.meta.env.DEV;
+    const baseUrl = import.meta.env.BASE_URL.endsWith('/')
+        ? import.meta.env.BASE_URL
+        : import.meta.env.BASE_URL + '/';
+    let serviceUrl = isDev
+        ? 'http://localhost:62870/api/documenteditor/'
+        : baseUrl + 'api/documenteditor/';
 
     /**
      * Logs each accept/reject revision action into the Revision Audit History

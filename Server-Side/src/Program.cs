@@ -67,6 +67,11 @@ namespace EJ2APIServices
 
             var app = builder.Build();
 
+            // Must be registered FIRST so all subsequent middleware (routing,
+            // static files, fallback) sees the path with the prefix stripped:
+            // /compare-configure-.../api/documenteditor/Import -> /api/documenteditor/Import
+            app.UsePathBase("/compare-configure-editable-regions-react-docx-editor");
+
             // ----- Middleware pipeline (previously in Startup.Configure) -----
             //Register Syncfusion license
             string licenseKey = string.Empty;
@@ -81,13 +86,14 @@ namespace EJ2APIServices
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
-            app.UsePathBase("/compare-configure-editable-regions-react-docx-editor");
             app.UseRouting();
             app.UseAuthorization();
             app.UseCors("MyPolicy");
             app.UseResponseCompression();
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            // SPA fallback: serve index.html for client-side routes like
+            // /compare-configure-.../document-protection (deep links/refresh).
             app.MapFallbackToFile("index.html");
             app.MapControllers().RequireCors("MyPolicy");
 
