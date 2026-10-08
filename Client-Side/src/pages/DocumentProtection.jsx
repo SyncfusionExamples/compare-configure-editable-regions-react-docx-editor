@@ -21,18 +21,10 @@ const DocumentProtection = () => {
     let settings = { showRuler: true };
     let userList = ["engineer@mycompany.com", "manager@mycompany.com"];
     /**
-     * Each user is mapped to a distinct editable-range highlight color so
-     * regions of different users are visually distinguishable.
+     * Sets the current user on the document editor.
      */
-    const userColorMap = {
-        'engineer@mycompany.com': '#0078d4',
-        'manager@mycompany.com': '#e3008c'
-    };
     const onChange = (event) => {
         container.current.documentEditor.currentUser = event.value;
-        // Update the editable range highlight color to the color of the
-        // newly selected user so the difference is visible.
-        container.current.documentEditor.userColor = userColorMap[event.value] || '#0078d4';
     };
     /**
      * Inserts an editable region over the current selection for the
@@ -123,7 +115,6 @@ const DocumentProtection = () => {
         container.current.showPropertiesPane = false;
         container.current.documentEditor.currentUser = "engineer@mycompany.com";
         // Highlight editable ranges with the color of the initial user.
-        container.current.documentEditor.userColor = userColorMap['engineer@mycompany.com'] || '#0078d4';
         // container.documentEditor.pageOutline = '#E0E0E0';
         // container.documentEditor.acceptTab = true;
         container.current.documentEditor.resize();
@@ -207,36 +198,18 @@ const DocumentProtection = () => {
     };
     return (<div className="control-pane">
             <div style={{ padding: '10px 15px', display: 'flex', alignItems: 'center', gap: 10 }}>
-                <button className="nav-button" onClick={() => navigate('/')} style={{
-                    padding: '8px 16px',
-                    border: '1px solid #0078d4',
-                    borderRadius: 4,
-                    background: '#0078d4',
-                    color: '#fff',
-                    cursor: 'pointer'
-                }}>Load Compare Sample</button>
-                <button id="insert-editable-region-btn" onClick={onInsertEditableRegion} style={{
-                    padding: '8px 16px',
-                    border: '1px solid #0078d4',
-                    borderRadius: 4,
-                    background: '#0078d4',
-                    color: '#fff',
-                    cursor: 'pointer'
-                }} title="Insert an editable region for the current user over the selected content">
-                    Insert Editable Region
+                <button className="e-btn e-primary" onClick={() => navigate('/')}>
+                    Load Compare Sample
                 </button>
-                <label id="open-pdf-image-btn" style={{
-                    padding: '8px 16px',
-                    border: '1px solid #0078d4',
-                    borderRadius: 4,
-                    background: '#0078d4',
-                    color: '#fff',
-                    cursor: 'pointer',
-                    display: 'inline-block'
-                }} title="Open a PDF or image file">
-                    Open PDF/Image
+                <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <button id="insert-editable-region-btn" className="e-btn e-primary" onClick={onInsertEditableRegion} title="Insert an editable region for the current user over the selected content">
+                        Insert Editable Region
+                    </button>
+                    <button id="open-pdf-image-btn" className="e-btn e-primary" onClick={() => document.getElementById('open-pdf-image-input').click()} title="Open a PDF or image file">
+                        Open PDF/Image
+                    </button>
                     <input id="open-pdf-image-input" type="file" accept=".pdf,.png,.jpg,.jpeg" style={{ display: 'none' }} onChange={onOpenPdfImage}/>
-                </label>
+                </div>
             </div>
             <div className="col-lg-12 control-section">
                 <div id="documenteditor_titlebar" className="e-de-ctn-title">
@@ -251,7 +224,7 @@ const DocumentProtection = () => {
                         <DropDownListComponent id="user-ddl" dataSource={userList} change={onChange.bind(this)} value={userList[0]} width="220px" cssClass="e-de-ctn-title-user-ddl" placeholder="Select user"/>
                     </div>
                 </div>
-                <div id="documenteditor_container_body" style={{ "display": "block", "height": "calc(100vh - 230px)" }}>
+                <div id="documenteditor_container_body" style={{ "display": "block", "height": "calc(100vh - 150px)" }}>
                     <DocumentEditorContainerComponent id="container" ref={container} style={{ display: "block" }} height={"100%"} toolbarMode={"Ribbon"} serviceUrl={hostUrl} enableToolbar={true} locale="en-US" documentEditorSettings={settings} fileMenuItems={['New', 'Open', {
                 text: 'Export',
                 id: 'custom_item',

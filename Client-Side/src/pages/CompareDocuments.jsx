@@ -240,17 +240,12 @@ const CompareDocumentsFunctional = () => {
         }
     };
     return (<div className="control-pane">
-      <div className="control-section" style={{ width: '100%' }}>
+      <div className="control-section" style={{ width: '100%', display: 'flex', flexDirection: 'column', height: '100vh' }}>
         {/* Navigation to Protection sample */}
-        <div style={{ width: '760px', margin: '10px auto', display: 'flex', justifyContent: 'flex-end' }}>
-          <button className="nav-button" onClick={() => navigate('/document-protection')} style={{
-            padding: '8px 16px',
-            border: '1px solid #0078d4',
-            borderRadius: 4,
-            background: '#0078d4',
-            color: '#fff',
-            cursor: 'pointer'
-          }}>Open Protection Sample</button>
+        <div style={{ padding: '10px 15px 0 15px', display: 'flex', justifyContent: 'flex-end' }}>
+          <button className="e-btn e-primary" onClick={() => navigate('/document-protection')}>
+            Open Protection Sample
+          </button>
         </div>
 
         {/* Shared Container */}
@@ -392,7 +387,8 @@ const CompareDocumentsFunctional = () => {
         <div style={{
             display: 'flex',
             gap: 6,
-            height: "calc(100vh - 690px)",
+            flex: 1,
+            minHeight: 200,
             padding: '0px 10px'
         }}>
           {/* Left Editor */}
@@ -407,7 +403,7 @@ const CompareDocumentsFunctional = () => {
               Original Document
             </div>
 
-            <div style={{ flex: 1, display: "block", height: "calc(100vh - 690px)" }}>
+            <div style={{ flex: 1, display: "block" }}>
               <DocumentEditorContainerComponent id="editor1" ref={editorRef1} serviceUrl={serviceUrl} height="100%" width="100%" enableToolbar={false} showPropertiesPane={false}/>
             </div>
           </div>
@@ -436,14 +432,14 @@ const CompareDocumentsFunctional = () => {
                 </ButtonComponent>}
             </div>
 
-            <div style={{ flex: 1, display: "block", height: "calc(100vh - 690px)" }}>
+            <div style={{ flex: 1, display: "block" }}>
               <DocumentEditorContainerComponent id="editor2" ref={editorRef2} serviceUrl={serviceUrl} height="100%" width="100%" enableToolbar={false} showPropertiesPane={false} beforeAcceptRejectChanges={beforeAcceptRejectChanges}/>
             </div>
           </div>
         </div>
 
         {/* Change Summary & Revision Audit History logs */}
-        <div style={{ display: 'flex', gap: 6, padding: '0px 10px', height: 330, marginTop: 10 }}>
+        <div style={{ display: 'flex', gap: 6, padding: '0px 10px 10px 10px', height: 220, flex: 'none', marginTop: 10 }}>
           {/* Change Summary */}
           <div style={{ width: '50%' }}>
             <LogPanel ref={changeSummaryRef} title="Change Summary" accentColor="#0078d4"/>

@@ -7,7 +7,7 @@ export default defineConfig({
     // Relative base so the build can be hosted in any Azure sub-folder.
     // For SPA routing on Azure Static Web Apps / App Service, deep links
     // like /document-protection are handled by their built-in fallback.
-    base: './',
+    base: '/compare-configure-editable-regions-react-docx-editor',
     server: {
         port: 5173
     }
