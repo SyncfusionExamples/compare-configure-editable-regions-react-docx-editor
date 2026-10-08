@@ -1,0 +1,32 @@
+{
+  "name": "docx-editor-showcase",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router-dom": "6.26.2",
+    "@syncfusion/ej2-base": "35.1.37",
+    "@syncfusion/ej2-react-base": "35.1.37",
+    "@syncfusion/ej2-documenteditor": "35.1.39",
+    "@syncfusion/ej2-react-documenteditor": "35.1.39",
+    "@syncfusion/ej2-buttons": "35.1.37",
+    "@syncfusion/ej2-react-buttons": "35.1.37",
+    "@syncfusion/ej2-splitbuttons": "35.1.37",
+    "@syncfusion/ej2-navigations": "35.1.39",
+    "@syncfusion/ej2-popups": "35.1.39",
+    "@syncfusion/ej2-dropdowns": "35.1.39",
+    "@syncfusion/ej2-react-dropdowns": "35.1.39",
+    "@syncfusion/ej2-react-popups": "35.1.39"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "4.3.2",
+    "vite": "5.4.8"
+  }
+}
