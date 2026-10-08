@@ -57,6 +57,57 @@ namespace SyncfusionDocument.Controllers
             return json;
         }
 
+        //Compares the original and revised Word documents and returns the
+        //resulting document (with tracked revisions) as SFDT JSON.
+        [AcceptVerbs("Post")]
+        [HttpPost]
+        [EnableCors("AllowAllOrigins")]
+        [Route("CompareDocuments")]
+        public string CompareDocuments(List<IFormFile> originalFile, List<IFormFile> revisedFile, string author, string dateTime)
+        {
+            if (originalFile == null || originalFile.Count == 0 || revisedFile == null || revisedFile.Count == 0)
+                return null;
+
+            //Load the original file into a DocIO WordDocument.
+            Stream originalStream = new MemoryStream();
+            originalFile[0].CopyTo(originalStream);
+            originalStream.Position = 0;
+            WDocument originalDocument = new WDocument(originalStream, Syncfusion.DocIO.FormatType.Docx);
+
+            //Load the revised file into a DocIO WordDocument.
+            Stream revisedStream = new MemoryStream();
+            revisedFile[0].CopyTo(revisedStream);
+            revisedStream.Position = 0;
+            WDocument revisedDocument = new WDocument(revisedStream, Syncfusion.DocIO.FormatType.Docx);
+
+            //Compare the original and revised documents. The compare result is
+            //merged into the original document as tracked revisions.
+            if (DateTime.TryParse(dateTime, out DateTime parsedDate))
+            {
+                originalDocument.Compare(revisedDocument, author, parsedDate);
+            }
+            else
+            {
+                originalDocument.Compare(revisedDocument, author);
+            }
+
+            //Save the compared document into a Docx stream.
+            MemoryStream docxResultStream = new MemoryStream();
+            originalDocument.Save(docxResultStream, Syncfusion.DocIO.FormatType.Docx);
+            originalDocument.Close();
+            revisedDocument.Close();
+            docxResultStream.Position = 0;
+
+            //Load the compare result into the Document Editor WordDocument to get SFDT.
+            WordDocument.MetafileImageParsed += OnMetafileImageParsed;
+            WordDocument resultDocument = WordDocument.Load(docxResultStream, Syncfusion.EJ2.DocumentEditor.FormatType.Docx);
+            WordDocument.MetafileImageParsed -= OnMetafileImageParsed;
+
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(resultDocument);
+            resultDocument.Dispose();
+            return json;
+        }
+
         //Converts PDF or Image to Word document, and then serializes the Word document as SFDT JSON.
         [AcceptVerbs("Post")]
         [HttpPost]
