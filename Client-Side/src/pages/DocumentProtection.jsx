@@ -15,7 +15,13 @@ const DocumentProtection = () => {
     useEffect(() => {
         rendereComplete();
     }, []);
-    let hostUrl = "http://localhost:62870/api/documenteditor/";
+    const isDev = import.meta.env.DEV;
+    const baseUrl = import.meta.env.BASE_URL.endsWith('/')
+        ? import.meta.env.BASE_URL
+        : import.meta.env.BASE_URL + '/';
+    let hostUrl = isDev
+        ? "http://localhost:62870/api/documenteditor/"
+        : baseUrl + "api/documenteditor/";
     let container = useRef(null);
     let titleBar;
     let settings = { showRuler: true };
